@@ -1,7 +1,9 @@
 
 public class Solution {
 
-    private record SwapIndexes(int left, int right) {}
+    private record SwapIndexes(int left, int right) {
+
+    }
     private static final int NO_SUCH_POSITIVE_INTEGER_EXISTS = -1;
 
     public int nextGreaterElement(int inputValue) {
@@ -9,16 +11,16 @@ public class Solution {
             return NO_SUCH_POSITIVE_INTEGER_EXISTS;
         }
 
-        int[] inpuValueAsArray = createInpuValueAsArray(inputValue);
-        SwapIndexes swapIndexes = findSwapIndexes(inpuValueAsArray);
+        int[] inputValueAsArray = createInputValueAsArray(inputValue);
+        SwapIndexes swapIndexes = findSwapIndexes(inputValueAsArray);
 
         if (swapIndexes.left == swapIndexes.right) {
             return NO_SUCH_POSITIVE_INTEGER_EXISTS;
         }
 
-        swapValues(inpuValueAsArray, swapIndexes.left, swapIndexes.right);
-        sortTrailingValuesAfterSwapInIncreasingOrder(inpuValueAsArray, swapIndexes.left + 1);
-        long nextGreaterElement = createNextGreaterElement(inpuValueAsArray);
+        swapValues(inputValueAsArray, swapIndexes.left, swapIndexes.right);
+        sortTrailingValuesAfterSwapInIncreasingOrder(inputValueAsArray, swapIndexes.left + 1);
+        long nextGreaterElement = createNextGreaterElement(inputValueAsArray);
 
         return nextGreaterElement <= Integer.MAX_VALUE ? (int) nextGreaterElement : NO_SUCH_POSITIVE_INTEGER_EXISTS;
     }
@@ -32,29 +34,29 @@ public class Solution {
         return numberOfDigits > 0 ? numberOfDigits : 1;
     }
 
-    private int[] createInpuValueAsArray(int inputValue) {
+    private int[] createInputValueAsArray(int inputValue) {
         int numberOfDigits = findNumberOfDigits(inputValue);
-        int[] inpuValueAsArray = new int[numberOfDigits];
-        int index = inpuValueAsArray.length - 1;
+        int[] inputValueAsArray = new int[numberOfDigits];
+        int index = inputValueAsArray.length - 1;
 
         while (inputValue > 0) {
-            inpuValueAsArray[index--] = inputValue % 10;
+            inputValueAsArray[index--] = inputValue % 10;
             inputValue /= 10;
         }
-        return inpuValueAsArray;
+        return inputValueAsArray;
     }
 
-    private SwapIndexes findSwapIndexes(int[] inpuValueAsArray) {
+    private SwapIndexes findSwapIndexes(int[] inputValueAsArray) {
         int left = 0;
         int right = 0;
 
-        for (int i = inpuValueAsArray.length - 2; i >= 0 && left == right; --i) {
-            for (int j = i + 1; j < inpuValueAsArray.length; ++j) {
+        for (int i = inputValueAsArray.length - 2; i >= 0 && left == right; --i) {
+            for (int j = i + 1; j < inputValueAsArray.length; ++j) {
 
-                if (inpuValueAsArray[i] < inpuValueAsArray[j] && left == right) {
+                if (inputValueAsArray[i] < inputValueAsArray[j] && left == right) {
                     left = i;
                     right = j;
-                } else if (inpuValueAsArray[i] < inpuValueAsArray[j] && inpuValueAsArray[j] < inpuValueAsArray[right]) {
+                } else if (inputValueAsArray[i] < inputValueAsArray[j] && inputValueAsArray[j] < inputValueAsArray[right]) {
                     right = j;
                 }
             }
@@ -62,26 +64,26 @@ public class Solution {
         return new SwapIndexes(left, right);
     }
 
-    private void sortTrailingValuesAfterSwapInIncreasingOrder(int[] inpuValueAsArray, int startIndex) {
+    private void sortTrailingValuesAfterSwapInIncreasingOrder(int[] inputValueAsArray, int startIndex) {
         int left = startIndex;
-        int right = inpuValueAsArray.length - 1;
+        int right = inputValueAsArray.length - 1;
 
-        while (left < right && inpuValueAsArray[left] > inpuValueAsArray[right]) {
-            swapValues(inpuValueAsArray, left, right);
+        while (left < right && inputValueAsArray[left] > inputValueAsArray[right]) {
+            swapValues(inputValueAsArray, left, right);
             ++left;
             --right;
         }
     }
 
-    private void swapValues(int[] inpuValueAsArray, int left, int right) {
-        int temp = inpuValueAsArray[left];
-        inpuValueAsArray[left] = inpuValueAsArray[right];
-        inpuValueAsArray[right] = temp;
+    private void swapValues(int[] inputValueAsArray, int left, int right) {
+        int temp = inputValueAsArray[left];
+        inputValueAsArray[left] = inputValueAsArray[right];
+        inputValueAsArray[right] = temp;
     }
 
-    private long createNextGreaterElement(int[] inpuValueAsArray) {
+    private long createNextGreaterElement(int[] inputValueAsArray) {
         long nextGreaterElement = 0;
-        for (int n : inpuValueAsArray) {
+        for (int n : inputValueAsArray) {
             nextGreaterElement = nextGreaterElement * 10 + n;
         }
         return nextGreaterElement;
