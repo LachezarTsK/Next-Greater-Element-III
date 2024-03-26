@@ -1,9 +1,7 @@
 
 public class Solution {
 
-    private record SwapIndexes(int left, int right) {
-
-    }
+    private record SwapIndexes(int left, int right) {}
     private static final int NO_SUCH_POSITIVE_INTEGER_EXISTS = -1;
 
     public int nextGreaterElement(int inputValue) {
