@@ -13,22 +13,22 @@ public class Solution
             return NO_SUCH_POSITIVE_INTEGER_EXISTS;
         }
 
-        int[] inputValueAsArray = createInputValueAsArray(inputValue);
-        SwapIndexes swapIndexes = findSwapIndexes(inputValueAsArray);
+        int[] inputValueAsArray = CreateInputValueAsArray(inputValue);
+        SwapIndexes swapIndexes = FindSwapIndexes(inputValueAsArray);
 
         if (swapIndexes.left == swapIndexes.right)
         {
             return NO_SUCH_POSITIVE_INTEGER_EXISTS;
         }
 
-        swapValues(inputValueAsArray, swapIndexes.left, swapIndexes.right);
-        sortTrailingValuesAfterSwapInIncreasingOrder(inputValueAsArray, swapIndexes.left + 1);
-        long nextGreaterElement = createNextGreaterElement(inputValueAsArray);
+        SwapValues(inputValueAsArray, swapIndexes.left, swapIndexes.right);
+        SortTrailingValuesAfterSwapInIncreasingOrder(inputValueAsArray, swapIndexes.left + 1);
+        long nextGreaterElement = CreateNextGreaterElement(inputValueAsArray);
 
         return nextGreaterElement <= int.MaxValue ? (int)nextGreaterElement : NO_SUCH_POSITIVE_INTEGER_EXISTS;
     }
 
-    private int findNumberOfDigits(int value)
+    private int FindNumberOfDigits(int value)
     {
         int numberOfDigits = 0;
         while (value > 0)
@@ -39,9 +39,9 @@ public class Solution
         return numberOfDigits > 0 ? numberOfDigits : 1;
     }
 
-    private int[] createInputValueAsArray(int inputValue)
+    private int[] CreateInputValueAsArray(int inputValue)
     {
-        int numberOfDigits = findNumberOfDigits(inputValue);
+        int numberOfDigits = FindNumberOfDigits(inputValue);
         int[] inputValueAsArray = new int[numberOfDigits];
         int index = inputValueAsArray.Length - 1;
 
@@ -53,7 +53,7 @@ public class Solution
         return inputValueAsArray;
     }
 
-    private SwapIndexes findSwapIndexes(int[] inputValueAsArray)
+    private SwapIndexes FindSwapIndexes(int[] inputValueAsArray)
     {
         int left = 0;
         int right = 0;
@@ -77,27 +77,27 @@ public class Solution
         return new SwapIndexes(left, right);
     }
 
-    private void sortTrailingValuesAfterSwapInIncreasingOrder(int[] inputValueAsArray, int startIndex)
+    private void SortTrailingValuesAfterSwapInIncreasingOrder(int[] inputValueAsArray, int startIndex)
     {
         int left = startIndex;
         int right = inputValueAsArray.Length - 1;
 
         while (left < right && inputValueAsArray[left] > inputValueAsArray[right])
         {
-            swapValues(inputValueAsArray, left, right);
+            SwapValues(inputValueAsArray, left, right);
             ++left;
             --right;
         }
     }
 
-    private void swapValues(int[] inputValueAsArray, int left, int right)
+    private void SwapValues(int[] inputValueAsArray, int left, int right)
     {
         int temp = inputValueAsArray[left];
         inputValueAsArray[left] = inputValueAsArray[right];
         inputValueAsArray[right] = temp;
     }
 
-    private long createNextGreaterElement(int[] inputValueAsArray)
+    private long CreateNextGreaterElement(int[] inputValueAsArray)
     {
         long nextGreaterElement = 0;
         foreach (int n in inputValueAsArray)
